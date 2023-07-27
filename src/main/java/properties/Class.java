@@ -1,5 +1,9 @@
 package properties;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Class {
 
     private int str;
@@ -10,18 +14,18 @@ public class Class {
     private int cha;
     private int hitPoints;
 
-    public Class (){
 
+    public Class (boolean doesDropLowest){
+        createStats(doesDropLowest);
     }
 
-    public Class (int str, int dex, int con, int intel, int wis, int cha, int hitPoints){
+    public Class (int str, int dex, int con, int intel, int wis, int cha){
         this.str = str;
         this.dex = dex;
         this.con = con;
         this.intel = intel;
         this.wis = wis;
         this.cha = cha;
-        this.hitPoints = hitPoints;
     }
     public int getStr() {
         return str;
@@ -81,5 +85,29 @@ public class Class {
 
     public String toString(){
         return "STR: " + str + "  DEX: " + dex + "  CON: " + con + "  INT: " + intel + "  WIS: " + wis + "  CHA: " + cha + "  HP: " + hitPoints;
+    }
+
+    public void createStats(boolean doesDropLowest){
+        Random rand = new Random();
+        List <Integer> stats = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++){
+            int d1 = rand.nextInt(6) + 1;
+            int d2 = rand.nextInt(6) + 1;
+            int d3 = rand.nextInt(6) + 1;
+            int sum = d1 + d2 + d3;
+            if (doesDropLowest){
+                int d4 = rand.nextInt(6) + 1;
+                sum = sum + d4 - Math.min(Math.min(Math.min(d1, d2), d3), d4);
+            }
+            stats.add(sum);
+        }
+
+        this.str = stats.get(0);
+        this.dex = stats.get(1);
+        this.con = stats.get(2);
+        this.intel = stats.get(3);
+        this.wis = stats.get(4);
+        this.cha = stats.get(5);
     }
 }
