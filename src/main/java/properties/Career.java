@@ -12,8 +12,9 @@ public class Career {
     private int intel;
     private int wis;
     private int cha;
-    private int hitPoints;
-
+    private int maxHitPoints;
+    private int currentHitPoints;
+    private int hitDie;
 
     public Career(boolean doesDropLowest){
         createStats(doesDropLowest);
@@ -26,7 +27,11 @@ public class Career {
         this.intel = intel;
         this.wis = wis;
         this.cha = cha;
+        this.hitDie = 4;
+        this.maxHitPoints = this.getModifier(con) + this.hitDie;
+        this.currentHitPoints = this.maxHitPoints;
     }
+
     public int getStr() {
         return str;
     }
@@ -51,8 +56,16 @@ public class Career {
         return cha;
     }
 
-    public int getHitPoints() {
-        return hitPoints;
+    public int getMaxHitPoints() {
+        return maxHitPoints;
+    }
+
+    public int getCurrentHitPoints(){
+        return currentHitPoints;
+    }
+
+    public int getHitDie() {
+        return hitDie;
     }
 
     public void setStr(int str) {
@@ -79,12 +92,16 @@ public class Career {
         this.cha = cha;
     }
 
-    public void setHitPoints(int hitPoints){
-        this.hitPoints = hitPoints;
+    protected void setMaxHitPoints(int hitPoints){
+        this.maxHitPoints = hitPoints;
+    }
+
+    protected void setHitDie(int hitDie){
+        this.hitDie = hitDie;
     }
 
     public String toString(){
-        return "STR: " + str + "  DEX: " + dex + "  CON: " + con + "  INT: " + intel + "  WIS: " + wis + "  CHA: " + cha + "  HP: " + hitPoints;
+        return "STR: " + str + "  DEX: " + dex + "  CON: " + con + "  INT: " + intel + "  WIS: " + wis + "  CHA: " + cha + "  HP: " + maxHitPoints;
     }
 
     public void createStats(boolean doesDropLowest){
@@ -109,5 +126,13 @@ public class Career {
         this.intel = stats.get(3);
         this.wis = stats.get(4);
         this.cha = stats.get(5);
+    }
+
+    public int getModifier(int stat){
+        return stat / 2 - 5;
+    }
+
+    public void longRest(){
+        this.currentHitPoints = maxHitPoints;
     }
 }
