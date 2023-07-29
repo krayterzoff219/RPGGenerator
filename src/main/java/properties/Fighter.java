@@ -1,6 +1,6 @@
 package properties;
 
-public class Fighter extends Class{
+public class Fighter extends Career{
     public Fighter(boolean doesDropLowest) {
         super(doesDropLowest);
     }

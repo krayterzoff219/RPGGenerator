@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Class {
+public class Career {
 
     private int str;
     private int dex;
@@ -15,11 +15,11 @@ public class Class {
     private int hitPoints;
 
 
-    public Class (boolean doesDropLowest){
+    public Career(boolean doesDropLowest){
         createStats(doesDropLowest);
     }
 
-    public Class (int str, int dex, int con, int intel, int wis, int cha){
+    public Career(int str, int dex, int con, int intel, int wis, int cha){
         this.str = str;
         this.dex = dex;
         this.con = con;
