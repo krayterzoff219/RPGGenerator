@@ -5,17 +5,17 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CareerTest {
+public class CharacterTest {
 
-    private Career sut;
+    private Character sut;
     @Before
     public void setup(){
-        sut = new Career(16, 14, 12, 10, 8, 12);
+        sut = new Character(16, 14, 12, 10, 8, 12);
     }
     @Test
     public void testToString() {
 
-        String expected = "STR: 16  DEX: 14  CON: 12  INT: 10  WIS: 8  CHA: 12  HP: 5";
+        String expected = "John Doe\nSTR: 16  DEX: 14  CON: 12  INT: 10  WIS: 8  CHA: 12  HP: 5";
         assertEquals(expected, sut.toString());
     }
 

@@ -1,10 +1,15 @@
 package properties;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Career {
+public class Character implements Serializable {
+
+    private String fileName = "";
+
+    private String charName;
 
     private int str;
     private int dex;
@@ -16,11 +21,15 @@ public class Career {
     private int currentHitPoints;
     private int hitDie;
 
-    public Career(boolean doesDropLowest){
+    public Character(boolean doesDropLowest){
         createStats(doesDropLowest);
+        this.hitDie = 4;
+        this.maxHitPoints = this.getModifier(con) + this.hitDie;
+        this.currentHitPoints = this.maxHitPoints;
+        this.charName = "John Doe";
     }
 
-    public Career(int str, int dex, int con, int intel, int wis, int cha){
+    public Character(int str, int dex, int con, int intel, int wis, int cha){
         this.str = str;
         this.dex = dex;
         this.con = con;
@@ -30,7 +39,9 @@ public class Career {
         this.hitDie = 4;
         this.maxHitPoints = this.getModifier(con) + this.hitDie;
         this.currentHitPoints = this.maxHitPoints;
+        this.charName = "John Doe";
     }
+
 
     public int getStr() {
         return str;
@@ -62,6 +73,14 @@ public class Career {
 
     public int getCurrentHitPoints(){
         return currentHitPoints;
+    }
+
+    public String getCharName() {
+        return charName;
+    }
+
+    public void setCharName(String charName){
+        this.charName = charName;
     }
 
     public int getHitDie() {
@@ -101,7 +120,7 @@ public class Career {
     }
 
     public String toString(){
-        return "STR: " + str + "  DEX: " + dex + "  CON: " + con + "  INT: " + intel + "  WIS: " + wis + "  CHA: " + cha + "  HP: " + maxHitPoints;
+        return charName + "\nSTR: " + str + "  DEX: " + dex + "  CON: " + con + "  INT: " + intel + "  WIS: " + wis + "  CHA: " + cha + "  HP: " + maxHitPoints;
     }
 
     public void createStats(boolean doesDropLowest){
@@ -134,5 +153,36 @@ public class Career {
 
     public void longRest(){
         this.currentHitPoints = maxHitPoints;
+    }
+
+    public void saveCharacter(){
+        if (fileName.equals("")){
+            String[] nameArr = charName.toLowerCase().split(" ");
+            for (String name : nameArr){
+                fileName += name + "-";
+            }
+            fileName += "character.dat";
+        }
+
+        try
+        {
+            // Create a file to write game system
+            FileOutputStream out = new FileOutputStream (fileName);
+
+            // Create an object output stream, linked to out
+            ObjectOutputStream objectOut = new ObjectOutputStream (out);
+
+            // Write game system to object store
+            objectOut.writeObject (this);
+
+            // Close object output stream
+            objectOut.close();
+
+            System.out.println ("Game data created as " + fileName );
+        }
+        catch (Exception e)
+        {
+            System.err.println ("Unable to create game data");
+        }
     }
 }
