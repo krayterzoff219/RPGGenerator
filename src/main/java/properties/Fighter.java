@@ -11,5 +11,9 @@ public class Fighter extends Character {
         this.setMaxHitPoints(getHitDie() + getModifier(con));
         longRest();
     }
+
+    public void levelUp(){
+        super.levelUp(this.getModifier(this.getStr()));
+    }
 }
 

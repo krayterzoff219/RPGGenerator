@@ -7,6 +7,7 @@ import java.util.Random;
 
 public class Character implements Serializable {
 
+    private Random rand = new Random();
     private String fileName = "";
 
     private String charName;
@@ -20,6 +21,8 @@ public class Character implements Serializable {
     private int maxHitPoints;
     private int currentHitPoints;
     private int hitDie;
+    private int level;
+    private int damage;
 
     public Character(boolean doesDropLowest){
         createStats(doesDropLowest);
@@ -27,6 +30,8 @@ public class Character implements Serializable {
         this.maxHitPoints = this.getModifier(con) + this.hitDie;
         this.currentHitPoints = this.maxHitPoints;
         this.charName = "John Doe";
+        this.level = 1;
+        this.damage = 4;
     }
 
     public Character(int str, int dex, int con, int intel, int wis, int cha){
@@ -37,9 +42,11 @@ public class Character implements Serializable {
         this.wis = wis;
         this.cha = cha;
         this.hitDie = 4;
+        this.level = 1;
         this.maxHitPoints = this.getModifier(con) + this.hitDie;
         this.currentHitPoints = this.maxHitPoints;
         this.charName = "John Doe";
+        this.damage = 4;
     }
 
 
@@ -77,6 +84,14 @@ public class Character implements Serializable {
 
     public String getCharName() {
         return charName;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     public void setCharName(String charName){
@@ -184,5 +199,17 @@ public class Character implements Serializable {
         {
             System.err.println ("Unable to create game data");
         }
+    }
+
+    public int takeDamage (int damage){
+        this.currentHitPoints -= damage;
+        return this.currentHitPoints;
+    }
+
+    public void levelUp (int dmgMod){
+        this.level++;
+        this.maxHitPoints += this.getModifier(this.con) + rand.nextInt(this.hitDie) + 1;
+        this.currentHitPoints = this.maxHitPoints;
+        this.damage += dmgMod;
     }
 }
