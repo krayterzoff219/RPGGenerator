@@ -4,11 +4,12 @@ package data;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
+import javax.annotation.processing.ProcessingEnvironment;
 import javax.sql.DataSource;
 
 public class DatabaseDao {
 
-    private final String NEON_CONNECTION_STRING = "postgres://krayterzoff219:EAnbBKq9Dr2L@ep-shy-resonance-25668067.us-east-2.aws.neon.tech/neondb";
+    private final String NEON_CONNECTION_STRING = "ep-shy-resonance-25668067.us-east-2.aws.neon.tech/neondb";
 
 
 
@@ -28,20 +29,20 @@ public class DatabaseDao {
             try {
 
 
-                int startUsernameIndex = NEON_CONNECTION_STRING.indexOf("//") + "//".length();
-                int endUsernameIndex = NEON_CONNECTION_STRING.indexOf(":", startUsernameIndex);
-                final String username = NEON_CONNECTION_STRING.substring(startUsernameIndex, endUsernameIndex);
+//                int startUsernameIndex = NEON_CONNECTION_STRING.indexOf("//") + "//".length();
+//                int endUsernameIndex = NEON_CONNECTION_STRING.indexOf(":", startUsernameIndex);
+//                final String username = NEON_CONNECTION_STRING.substring(startUsernameIndex, endUsernameIndex);
+//
+//                int endPasswordIndex = NEON_CONNECTION_STRING.indexOf("@");
+//                final String password = NEON_CONNECTION_STRING.substring(endUsernameIndex + 1, endPasswordIndex);
 
-                int endPasswordIndex = NEON_CONNECTION_STRING.indexOf("@");
-                final String password = NEON_CONNECTION_STRING.substring(endUsernameIndex + 1, endPasswordIndex);
-
-                final String address = NEON_CONNECTION_STRING.substring(endPasswordIndex + 1);
+                final String address = NEON_CONNECTION_STRING;  //.substring(endPasswordIndex + 1);
 
                 //                           "jdbc:postgresql://<hostname/address>/<database name>
                 final String connectionStr = "jdbc:postgresql://" + address;
                 dbSource.setUrl(connectionStr);
-                dbSource.setUsername(username);
-                dbSource.setPassword(password);
+                dbSource.setUsername(System.getenv("USERNAME"));
+                dbSource.setPassword(System.getenv("PASSWORD"));
 
             } catch(IndexOutOfBoundsException e){
                 String errorMessage = "Error parsing connection string (NEON_CONNECTION_STRING).\n" +
