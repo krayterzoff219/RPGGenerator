@@ -1,14 +1,15 @@
 package properties;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Character implements Serializable {
+// implements Serializable
+
+public class PlayerCharacter {
 
     private Random rand = new Random();
-    private String fileName = "";
+//    private String fileName = "";
 
     private String charName;
 
@@ -24,7 +25,11 @@ public class Character implements Serializable {
     private int level;
     private int damage;
 
-    public Character(boolean doesDropLowest){
+    public PlayerCharacter(){
+
+    }
+
+    public PlayerCharacter(boolean doesDropLowest){
         createStats(doesDropLowest);
         this.hitDie = 4;
         this.maxHitPoints = this.getModifier(con) + this.hitDie;
@@ -34,7 +39,7 @@ public class Character implements Serializable {
         this.damage = 4;
     }
 
-    public Character(int str, int dex, int con, int intel, int wis, int cha){
+    public PlayerCharacter(int str, int dex, int con, int intel, int wis, int cha){
         this.str = str;
         this.dex = dex;
         this.con = con;
@@ -126,12 +131,24 @@ public class Character implements Serializable {
         this.cha = cha;
     }
 
-    protected void setMaxHitPoints(int hitPoints){
+    public void setMaxHitPoints(int hitPoints){
         this.maxHitPoints = hitPoints;
     }
 
-    protected void setHitDie(int hitDie){
+    public void setHitDie(int hitDie){
         this.hitDie = hitDie;
+    }
+
+    public void setCurrentHitPoints(int currentHitPoints) {
+        this.currentHitPoints = currentHitPoints;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
     }
 
     public String toString(){
@@ -170,36 +187,36 @@ public class Character implements Serializable {
         this.currentHitPoints = maxHitPoints;
     }
 
-    public void saveCharacter(){
-        if (fileName.equals("")){
-            String[] nameArr = charName.toLowerCase().split(" ");
-            for (String name : nameArr){
-                fileName += name + "-";
-            }
-            fileName += "character.dat";
-        }
-
-        try
-        {
-            // Create a file to write game system
-            FileOutputStream out = new FileOutputStream (fileName);
-
-            // Create an object output stream, linked to out
-            ObjectOutputStream objectOut = new ObjectOutputStream (out);
-
-            // Write game system to object store
-            objectOut.writeObject (this);
-
-            // Close object output stream
-            objectOut.close();
-
-            System.out.println ("Game data created as " + fileName );
-        }
-        catch (Exception e)
-        {
-            System.err.println ("Unable to create game data");
-        }
-    }
+//    public void saveCharacter(){
+//        if (fileName.equals("")){
+//            String[] nameArr = charName.toLowerCase().split(" ");
+//            for (String name : nameArr){
+//                fileName += name + "-";
+//            }
+//            fileName += "character.dat";
+//        }
+//
+//        try
+//        {
+//            // Create a file to write game system
+//            FileOutputStream out = new FileOutputStream (fileName);
+//
+//            // Create an object output stream, linked to out
+//            ObjectOutputStream objectOut = new ObjectOutputStream (out);
+//
+//            // Write game system to object store
+//            objectOut.writeObject (this);
+//
+//            // Close object output stream
+//            objectOut.close();
+//
+//            System.out.println ("Game data created as " + fileName );
+//        }
+//        catch (Exception e)
+//        {
+//            System.err.println ("Unable to create game data");
+//        }
+//    }
 
     public int takeDamage (int damage){
         this.currentHitPoints -= damage;

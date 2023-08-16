@@ -5,12 +5,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CharacterTest {
+public class PlayerCharacterTest {
 
-    private Character sut;
+    private PlayerCharacter sut;
     @Before
     public void setup(){
-        sut = new Character(16, 14, 12, 10, 8, 12);
+        sut = new PlayerCharacter(16, 14, 12, 10, 8, 12);
     }
     @Test
     public void testToString() {
